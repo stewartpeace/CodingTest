@@ -4,7 +4,9 @@
 	{
 		public string Reverse(string input)
 		{
-			string output = string.Empty;
+            input = !string.IsNullOrWhiteSpace(input) ? input : string.Empty;
+
+            string output = string.Empty;
 
 			for(int i = input.Length - 1; i >= 0; i--)
 			{
