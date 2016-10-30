@@ -6,20 +6,21 @@ namespace SkeletonCode.CurrencyConverter
 	public class Converter
 	{
 
-        List<string> ValidISOCodes = new List<string> { "GBP", "USD" };
+        List<CurrencyCode> ValidISOCodes = new List<CurrencyCode> {
+                new CurrencyCode { FromISOCode = "GBP", ToISOCode = "USD", ExchangeRate = 1.25m},
+                new CurrencyCode { FromISOCode = "USD", ToISOCode = "GBP", ExchangeRate = 0.8m }
+        };
 
 		public decimal Convert(string inputCurrency, string outputCurrency, decimal amount)
 		{
-            if (!ValidISOCodes.Contains(inputCurrency))
+            CurrencyCode targetCurrency = ValidISOCodes.Find(x => x.ToString().Equals(string.Format("{0}-{1}", inputCurrency, outputCurrency)));
+
+            if (targetCurrency == null)
             {
-                throw new ArgumentException("Invalid ISO code", "inputCurrency");
+                throw new ArgumentException("Invalid ISO code combination");
             }
-            else if (!ValidISOCodes.Contains(outputCurrency))
-            {
-                throw new ArgumentException("Invalid ISO code", "outputCurrency");
-            }
-            
-            return amount;
+
+            return amount * targetCurrency.ExchangeRate;
 		}
 	}
 }
