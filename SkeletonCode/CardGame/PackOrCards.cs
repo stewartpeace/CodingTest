@@ -27,7 +27,12 @@ namespace SkeletonCode.CardGame
 
         public ICard TakeCardFromTopOfPack()
         {
-            throw new NotImplementedException();
+            ICard card = this[0];
+
+            base.RemoveAt(0);
+
+            return card;
+            
         }
     }
 }
